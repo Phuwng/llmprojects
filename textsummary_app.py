@@ -79,6 +79,30 @@
 #     else:
 #         st.warning("Please enter a valid URL.")
 
+# --- MUST BE AT THE VERY TOP OF FILE ---
+import sys, subprocess, traceback, importlib.util
+
+def ensure_install(module_name, pip_name=None):
+    pip_name = pip_name or module_name
+    if importlib.util.find_spec(module_name) is None:
+        print(f"[setup] {module_name} not found — installing {pip_name} ...")
+        try:
+            subprocess.check_call([sys.executable, "-m", "pip", "install", pip_name, "--no-cache-dir"])
+            print(f"[setup] Installed {pip_name}")
+        except Exception as e:
+            print(f"[setup] Failed to install {pip_name}: {e}")
+            traceback.print_exc()
+            raise
+
+# ensure deep-translator is available before any other imports
+ensure_install("deep_translator", "deep-translator")
+
+# now safe to import
+from deep_translator import GoogleTranslator
+print("[setup] deep_translator import OK")
+# --- end of setup block ---
+
+
 import streamlit as st
 import requests
 from deep_translator import GoogleTranslator
