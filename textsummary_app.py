@@ -83,6 +83,19 @@ import streamlit as st
 import requests
 from deep_translator import GoogleTranslator
 
+# các thư viện cần thiết
+import os
+import subprocess
+import sys
+
+# đảm bảo deep-translator được cài khi app khởi chạy
+try:
+    from deep_translator import GoogleTranslator
+except ModuleNotFoundError:
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "deep-translator"])
+    from deep_translator import GoogleTranslator
+
+
 # Hàm gọi Ollama để tóm tắt
 def summarize_text(text):
     url = "http://localhost:11434/api/chat"
