@@ -1,6 +1,7 @@
 streamlit
+deep-translator
 pandas
 numpy
-matplotlib
-streamlit
-deep-translator
+scikit-learn
+nltk
+
